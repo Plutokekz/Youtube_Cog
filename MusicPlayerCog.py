@@ -7,9 +7,9 @@ import discord
 from discord.ext import commands
 from discord.utils import get
 
-from MusicPlayer import MusicPlayer
-from Youtube import YTDLSource, YTDLError, Song
-from config import DISCORD
+from . import MusicPlayer
+from . import YTDLSource, YTDLError, Song
+from . import DISCORD
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

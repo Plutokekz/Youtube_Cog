@@ -1,7 +1,7 @@
 import asyncio
 
 from async_timeout import timeout
-from config import DISCORD
+from . import DISCORD
 
 
 class MusicPlayer:

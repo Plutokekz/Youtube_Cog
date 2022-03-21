@@ -5,7 +5,7 @@ import discord
 import youtube_dl
 from discord.ext import commands
 
-from config import YTDL_OPTIONS, FFMPEG_OPTIONS, DISCORD
+from . import YTDL_OPTIONS, FFMPEG_OPTIONS, DISCORD
 
 # Silence useless bug reports messages
 youtube_dl.utils.bug_reports_message = lambda: ''

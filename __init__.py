@@ -14,3 +14,4 @@ __path__ = __import__('pkgutil').extend_path(__path__, __name__)
 
 from .config import DISCORD, YTDL_OPTIONS, FFMPEG_OPTIONS
 from .MusicPlayer import MusicPlayer
+from .Youtube import YTDLSource, YTDLError, Song
