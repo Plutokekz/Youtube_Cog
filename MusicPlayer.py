@@ -40,8 +40,6 @@ class MusicPlayer:
             audio_source.volume = self.volume
             self.current = audio_source
 
-            # print(self._guild.voice_client)
-
             self._guild.voice_client.play(audio_source,
                                           after=lambda _: self.bot.loop.call_soon_threadsafe(self.next.set))
             await self._channel.send(embed=source.to_embed(), delete_after=30)  # self.np =
@@ -50,12 +48,6 @@ class MusicPlayer:
             # Make sure the FFmpeg process is cleaned up.
             audio_source.cleanup()
             self.current = None
-
-            # try:
-            #     #We are no longer playing this song...
-            #    await self.np.delete()
-            # except discord.HTTPException:
-            #    pass
 
     def destroy(self, guild):
         """Disconnect and cleanup the player."""

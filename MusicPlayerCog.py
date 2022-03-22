@@ -11,7 +11,6 @@ from .MusicPlayer import MusicPlayer
 from . import YTDLSource, YTDLError, Song
 from . import DISCORD
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
