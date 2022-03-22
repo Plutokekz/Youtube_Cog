@@ -22,7 +22,8 @@ class YTDLError(Exception):
 class YTDLSource(discord.PCMVolumeTransformer):
     ytdl = youtube_dl.YoutubeDL(YTDL_OPTIONS)
 
-    def __init__(self, ctx: commands.Context, source: discord.FFmpegPCMAudio, *, data: dict, volume: float = DISCORD['volume']):
+    def __init__(self, ctx: commands.Context, source: discord.FFmpegPCMAudio, *, data: dict,
+                 volume: float = DISCORD['volume']):
         super().__init__(source, volume)
 
         self.requester = ctx.author
@@ -31,8 +32,8 @@ class YTDLSource(discord.PCMVolumeTransformer):
 
         self.uploader = data.get('uploader')
         self.uploader_url = data.get('uploader_url')
-        date = data.get('upload_date')
-        self.upload_date = date[6:8] + '.' + date[4:6] + '.' + date[0:4]
+        # date = data.get('upload_date')
+        self.upload_date = "22.02.2022"  # date[6:8] + '.' + date[4:6] + '.' + date[0:4] if data else None
         self.title = data.get('title')
         self.thumbnail = data.get('thumbnail')
         self.description = data.get('description')
@@ -79,7 +80,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         info = {
             "uploader": "Unknown",
             "uploader_url": "-",
-            "upload_date": "-",
+            "upload_date": "22.02.2022",
             "title": "-",
             "thumbnail": "https://www.silvaporto.com.br/wp-content/uploads/2017/08/default_thumbnail-768x576.jpg",
             "description": "-",
@@ -98,10 +99,24 @@ class YTDLSource(discord.PCMVolumeTransformer):
             info = None
             while info is None:
                 try:
-                    info = processed_info['entries'].pop(0)
+                    info = {
+                        "uploader": "Unknown",
+                        "uploader_url": "-",
+                        "upload_date": "22.02.2022",
+                        "title": "-",
+                        "thumbnail": "https://www.silvaporto.com.br/wp-content/uploads/2017/08/default_thumbnail-768x576.jpg",
+                        "description": "-",
+                        "duration": 100,
+                        "tags": "-",
+                        "webpage_url": "https://dasendedesinternet.de/",
+                        "view_count": "0",
+                        "like_count": "0",
+                        "dislike_count": "0",
+                        "url": "https://dasendedesinternet.de/"
+                    }
+                    info.update(processed_info['entries'].pop(0))
                 except IndexError:
                     raise YTDLError(f'Couldn\'t retrieve any matches for `{webpage_url}`')
-
         return cls(ctx, discord.FFmpegPCMAudio(info['url'], **FFMPEG_OPTIONS), data=info)
 
     @staticmethod

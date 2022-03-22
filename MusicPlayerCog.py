@@ -7,7 +7,7 @@ import discord
 from discord.ext import commands
 from discord.utils import get
 
-from . import MusicPlayer
+from .MusicPlayer import MusicPlayer
 from . import YTDLSource, YTDLError, Song
 from . import DISCORD
 
