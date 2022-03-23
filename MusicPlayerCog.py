@@ -43,7 +43,6 @@ class PlaySounds(commands.Cog):
     def __init__(self, client):
         self.client = client
         self.players = {}
-        self.messages = []
         self.vc = None
 
     @commands.command(name='play')
@@ -55,9 +54,8 @@ class PlaySounds(commands.Cog):
         This command automatically searches from various sites if no URL is provided.
         A list of these sites can be found here: https://rg3.github.io/youtube-dl/supportedsites.html
         """
-
+        logger.info(f"trying to play {search}")
         channel = ctx.voice_client
-        self.messages.append(ctx.message)
         if not channel:
             await ctx.invoke(self._connect)
         player = self.get_player(ctx)
@@ -78,10 +76,10 @@ class PlaySounds(commands.Cog):
     @check_role()
     async def _disconnect(self, context):
         """Disconnects the Bot from the current voice channel."""
-        self.messages.append(context.message)
         vc = context.voice_client
         if vc:
             await vc.disconnect()
+        logger.info("disconnecting")
         await context.message.delete(delay=10)
 
     @staticmethod
@@ -105,18 +103,17 @@ class PlaySounds(commands.Cog):
                 return
             try:
                 await vc.move_to(channel)
+                logger.info(f"moved to {channel}")
             except asyncio.TimeoutError:
                 await self._send_error_msg(ctx, f'Get Nicht: <{channel}> Zeit aus.')
                 logger.warning(f"Error timeout for: {channel}")
         else:
             try:
-
                 await channel.connect()
-
+                logger.info(f"connected to {channel}")
             except asyncio.TimeoutError:
                 await self._send_error_msg(ctx, f'Get Nicht: <{channel}> Zeit aus.')
                 logger.warning(f"Error timeout for: {channel}")
-
         await ctx.send(f'Sie sind verbunden mit: **{channel}**', delete_after=10)
         logger.info(f"Bot connect with: {channel}")
         await ctx.message.delete(delay=10)
