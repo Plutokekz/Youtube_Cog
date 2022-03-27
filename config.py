@@ -2,7 +2,8 @@ import configparser
 import os
 
 config = configparser.ConfigParser()
-config.read(os.path.join("\\".join(os.path.abspath(__file__).split("\\")[:-1]), "config.ini"))
+path = os.path.join(f"{os.sep}".join(os.path.abspath(__file__).split(os.sep)[:-1]), "config.ini")
+config.read(path)
 
 YTDL_OPTIONS = dict(config.items("ytdl"))
 for key, value in YTDL_OPTIONS.items():
