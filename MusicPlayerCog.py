@@ -28,8 +28,9 @@ def check_role(roles: [str] = DISCORD["roles"]):
     :param roles: a list of role names
     :return: commands.check()
     """
+
     def predicate(ctx):
-        print([x.name for x in ctx.message.author.roles])
+        # print([x.name for x in ctx.message.author.roles])
         for role in roles:
             if role in [x.name for x in ctx.message.author.roles]:
                 return True
